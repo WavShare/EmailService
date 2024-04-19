@@ -2,25 +2,18 @@ version: "3.8"
 services:
   email-service:
     container_name: email-service
-    depends_on:
-      - email-db
     image: email-service
     build:
-      context: .
       dockerfile: Dockerfile
-    restart: on-failure
+    restart: unless-stopped
+    env_file:
+      - .env
     ports:
-      - "8087:8087"
-  email-db:
-    container_name: email-db
-    restart: always
-    image: redis:7.0.5-alpine
-    ports:
-      - "6382:6382"
-    expose:
-      - 6382
-    volumes:
-      - email-db-volume:/var/lib/email-db
+      - "8093:8093"
+    networks:
+        - wavshare-nw
 
-volumes:
-  email-db-volume:
+networks:
+  wavshare-nw:
+    name: wavshare-nw
+    external: true
