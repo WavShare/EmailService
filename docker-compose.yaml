@@ -9,7 +9,7 @@ services:
     env_file:
       - .env
     ports:
-      - "8093:8093"
+      - "8093:8080"
     networks:
         - wavshare-nw
 
